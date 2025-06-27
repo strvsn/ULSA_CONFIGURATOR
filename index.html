@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ULSA Configurator - Web-based Device Configuration Tool</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Web-based configurator for ULSA series devices. Configure your devices easily using Web Serial API without any software installation.">
+    <meta name="keywords" content="ULSA, configurator, web serial API, IoT, sensor configuration, device management">
+    <meta name="author" content="STRVSN">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="ULSA Configurator">
+    <meta property="og:description" content="Web-based configurator for ULSA series devices">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://your-username.github.io/ULSA_CONFIGURATOR">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="ULSA Configurator">
+    <meta name="twitter:description" content="Web-based configurator for ULSA series devices">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- ヘッダー -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <i class="fas fa-cog logo-icon"></i>
+                    <h1>ULSA Configurator</h1>
+                </div>
+                <div class="connection-status" id="connectionStatus">
+                    <span class="status-indicator disconnected"></span>
+                    <span class="status-text">未接続</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- メインコンテンツ -->
+        <main class="main-content">            <!-- 接続コントロール -->
+            <section class="connection-section">                
+                <!-- 接続設定 -->
+                <div class="connection-settings">
+                    <div class="setting-group">
+                        <label for="baudRate">ビットレート:</label>
+                        <select id="baudRate" class="form-select">
+                            <option value="9600">9600</option>
+                            <option value="19200">19200</option>
+                            <option value="38400">38400</option>
+                            <option value="57600">57600</option>
+                            <option value="115200" selected>115200</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="connection-controls">
+                    <button id="connectBtn" class="btn btn-primary">
+                        <i class="fas fa-plug"></i>
+                        接続
+                    </button>
+                    <button id="disconnectBtn" class="btn btn-secondary" disabled>
+                        <i class="fas fa-unlink"></i>
+                        切断
+                    </button>
+                    <button id="clearConsoleBtn" class="btn btn-outline">
+                        <i class="fas fa-trash"></i>
+                        クリア
+                    </button>
+                </div>
+            </section>
+
+            <!-- コンソールセクション -->
+            <section class="console-section">
+                <div class="console-header">
+                    <h2>
+                        <i class="fas fa-terminal"></i>
+                        コンソール
+                    </h2>
+                    <div class="console-controls">
+                        <button id="autoscrollBtn" class="btn btn-small active" title="自動スクロール">
+                            <i class="fas fa-arrows-alt-v"></i>
+                        </button>
+                        <button id="timestampBtn" class="btn btn-small active" title="タイムスタンプ表示">
+                            <i class="fas fa-clock"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="console-container">
+                    <div id="console" class="console-output"></div>
+                </div>
+                
+                <!-- 送信エリア -->
+                <div class="send-section">
+                    <div class="send-input-container">
+                        <input type="text" id="sendInput" class="send-input" placeholder="送信するコマンドを入力..." disabled>
+                        <button id="sendBtn" class="btn btn-primary send-btn" disabled>
+                            <i class="fas fa-paper-plane"></i>
+                            送信
+                        </button>
+                    </div>                    <div class="send-options">
+                        <div class="send-help">
+                            <span class="help-text">
+                                <i class="fas fa-info-circle"></i>
+                                Enter: 改行なし送信 | Shift+Enter: CR付き送信
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ULSA設定セクション -->
+            <section class="config-section">
+                <div class="config-header">
+                    <h2>
+                        <i class="fas fa-cogs"></i>
+                        ULSA設定
+                    </h2>
+                </div>                  <div class="config-content">
+                    <!-- 2カラムレイアウト -->
+                    <div class="config-groups-container">
+                        <!-- 左カラム -->
+                        <div class="config-column-left">
+                            <!-- ノードID設定 -->
+                            <div class="config-group">
+                                <h3 class="config-group-title">ノードID設定</h3>
+                                
+                                <div class="config-item">
+                                    <label class="checkbox-label config-checkbox">
+                                        <input type="checkbox" id="enableNodeId">
+                                        <span class="checkmark"></span>
+                                        <span class="config-label">[A] ノードID</span>
+                                    </label>
+                                    <div class="config-control">
+                                        <input type="number" id="nodeId" class="form-input-number" min="0" max="255" value="0" disabled>
+                                        <span class="config-unit">(0-255)</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- USBポート設定 -->
+                            <div class="config-group">
+                                <h3 class="config-group-title">USBポート設定</h3>
+                                
+                                <div class="config-item">
+                                    <label class="checkbox-label config-checkbox">
+                                        <input type="checkbox" id="enableUsbProtocol">
+                                        <span class="checkmark"></span>
+                                        <span class="config-label">[B] USBポートプロトコル</span>
+                                    </label>                            <div class="config-control">
+                                        <select id="usbProtocol" class="form-select" disabled>
+                                            <option value="0">[0] Nothing Output</option>
+                                            <option value="1">[1] Simple CSV</option>
+                                            <option value="2" selected>[2] List Format</option>
+                                            <option value="3">[3] NMEA0183</option>
+                                            <option value="4">[4] Graph Plot (e.g. CPLT)</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="config-item">
+                                    <label class="checkbox-label config-checkbox">
+                                        <input type="checkbox" id="enableUsbBaudrate">
+                                        <span class="checkmark"></span>
+                                        <span class="config-label">[C] USBポートビットレート</span>
+                                    </label>                            <div class="config-control">
+                                        <select id="usbBaudrate" class="form-select" disabled>
+                                            <option value="0">[0] 4800bps</option>
+                                            <option value="1">[1] 9600bps</option>
+                                            <option value="2">[2] 19200bps</option>
+                                            <option value="3">[3] 38400bps</option>
+                                            <option value="4">[4] 57600bps</option>
+                                            <option value="5" selected>[5] 115200bps</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="config-item">
+                                    <label class="checkbox-label config-checkbox">
+                                        <input type="checkbox" id="enableUsbOutputRate">
+                                        <span class="checkmark"></span>
+                                        <span class="config-label">[E] USBポート出力レート</span>
+                                    </label>                            <div class="config-control">
+                                        <select id="usbOutputRate" class="form-select" disabled>
+                                            <option value="0">[0] 1Hz</option>
+                                            <option value="1">[1] 2Hz (Only 115200bps supported)</option>
+                                            <option value="2">[2] 5Hz (Only 115200bps supported)</option>
+                                            <option value="3" selected>[3] 10Hz (Only 115200bps supported)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 右カラム -->
+                        <div class="config-column-right">
+                            <!-- AUXポート設定 -->
+                            <div class="config-group">
+                                <h3 class="config-group-title">AUXポート設定</h3>
+                                
+                                <div class="config-item">
+                                    <label class="checkbox-label config-checkbox">
+                                        <input type="checkbox" id="enableAuxProtocol">
+                                        <span class="checkmark"></span>
+                                        <span class="config-label">[G] AUXポートプロトコル</span>
+                                    </label>                            <div class="config-control">
+                                        <select id="auxProtocol" class="form-select" disabled>
+                                            <option value="0">[0] Nothing Output</option>
+                                            <option value="1">[1] Simple CSV</option>
+                                            <option value="2">[2] List Format</option>
+                                            <option value="3">[3] NMEA0183</option>
+                                            <option value="4">[4] Graph Plot (e.g. CPLT)</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="config-item">
+                                    <label class="checkbox-label config-checkbox">
+                                        <input type="checkbox" id="enableAuxBaudrate">
+                                        <span class="checkmark"></span>
+                                        <span class="config-label">[H] AUXポートビットレート</span>
+                                    </label>                            <div class="config-control">
+                                        <select id="auxBaudrate" class="form-select" disabled>
+                                            <option value="0">[0] 4800bps</option>
+                                            <option value="1">[1] 9600bps</option>
+                                            <option value="2">[2] 19200bps</option>
+                                            <option value="3">[3] 38400bps</option>
+                                            <option value="4">[4] 57600bps</option>
+                                            <option value="5" selected>[5] 115200bps</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="config-item">
+                                    <label class="checkbox-label config-checkbox">
+                                        <input type="checkbox" id="enableAuxOutputRate">
+                                        <span class="checkmark"></span>
+                                        <span class="config-label">[I] AUXポート出力レート</span>
+                                    </label>                            <div class="config-control">
+                                        <select id="auxOutputRate" class="form-select" disabled>
+                                            <option value="0">[0] 1Hz</option>
+                                            <option value="1">[1] 2Hz (Only 115200bps supported)</option>
+                                            <option value="2">[2] 5Hz (Only 115200bps supported)</option>
+                                            <option value="3" selected>[3] 10Hz (Only 115200bps supported)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>                    <!-- M5Bポート設定 -->
+                            <div class="config-group" id="m5bConfigGroup">
+                                <h3 class="config-group-title">M5Bポート設定</h3>
+                                
+                                <div class="config-item">
+                                    <label class="checkbox-label config-checkbox">
+                                        <input type="checkbox" id="enableM5bProtocol">
+                                        <span class="checkmark"></span>
+                                        <span class="config-label">[J] M5Bポートプロトコル</span>
+                                    </label>                            <div class="config-control">
+                                        <select id="m5bProtocol" class="form-select" disabled>
+                                            <option value="0">[0] Nothing Output</option>
+                                            <option value="1" selected>[1] Simple CSV</option>
+                                            <option value="2">[2] List Format</option>
+                                            <option value="3">[3] NMEA0183</option>
+                                            <option value="4">[4] Graph Plot (e.g. CPLT)</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="config-item">
+                                    <label class="checkbox-label config-checkbox">
+                                        <input type="checkbox" id="enableM5bBaudrate">
+                                        <span class="checkmark"></span>
+                                        <span class="config-label">[K] M5Bポートビットレート</span>
+                                    </label>                            <div class="config-control">
+                                        <select id="m5bBaudrate" class="form-select" disabled>
+                                            <option value="0">[0] 4800bps</option>
+                                            <option value="1">[1] 9600bps</option>
+                                            <option value="2">[2] 19200bps</option>
+                                            <option value="3">[3] 38400bps</option>
+                                            <option value="4">[4] 57600bps</option>
+                                            <option value="5" selected>[5] 115200bps</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="config-item">
+                                    <label class="checkbox-label config-checkbox">
+                                        <input type="checkbox" id="enableM5bOutputRate">
+                                        <span class="checkmark"></span>
+                                        <span class="config-label">[M] M5Bポート出力レート</span>
+                                    </label>                            <div class="config-control">
+                                        <select id="m5bOutputRate" class="form-select" disabled>
+                                            <option value="0">[0] 1Hz</option>
+                                            <option value="1">[1] 2Hz (Only 115200bps supported)</option>
+                                            <option value="2">[2] 5Hz (Only 115200bps supported)</option>
+                                            <option value="3" selected>[3] 10Hz (Only 115200bps supported)</option>
+                                        </select>                            </div>
+                                </div>
+                            </div>                    <!-- 平均化サイクル設定 -->
+                            <div class="config-group">
+                                <h3 class="config-group-title">平均化サイクル設定</h3>
+                                
+                                <div class="config-item">
+                                    <label class="checkbox-label config-checkbox">
+                                        <input type="checkbox" id="enableAveragingCycle">
+                                        <span class="checkmark"></span>
+                                        <span class="config-label">[N] 平均化サイクル</span>
+                                    </label>                            <div class="config-control">
+                                        <select id="averagingCycle" class="form-select" disabled>
+                                            <option value="0">[0] 1 measurement cycle</option>
+                                            <option value="1">[1] 4 measurement cycles</option>
+                                            <option value="2">[2] 8 measurement cycles</option>
+                                            <option value="3">[3] 16 measurement cycles</option>
+                                            <option value="4" selected>[4] 32 measurement cycles</option>
+                                            <option value="5">[5] 64 measurement cycles</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 設定送信ボタン -->
+                    <div class="config-actions">
+                        <button id="applyFactoryDefaultsBtn" class="btn btn-outline">
+                            <i class="fas fa-undo"></i>
+                            工場出荷時設定を適用
+                        </button>
+                        <button id="loadConfigFileBtn" class="btn btn-outline">
+                            <i class="fas fa-folder-open"></i>
+                            設定ファイルをロード
+                        </button>
+                        <button id="saveConfigFileBtn" class="btn btn-outline">
+                            <i class="fas fa-save"></i>
+                            設定ファイルをセーブ
+                        </button>
+                        <button id="sendConfigBtn" class="btn btn-primary" disabled>
+                            <i class="fas fa-paper-plane"></i>
+                            設定を送信
+                        </button>
+                    </div>
+
+                    <!-- 設定無効化時のオーバーレイ -->
+                    <div id="configOverlay" class="config-overlay" style="display: none; pointer-events: auto; z-index: 1000;">
+                        <div class="overlay-content" style="pointer-events: auto; z-index: 1100; position: relative;">
+                            <div class="overlay-message">
+                                <i class="fas fa-lock"></i>
+                                設定を読み込み後に利用可能
+                            </div>                            <button id="overlayReadConfigBtn" class="btn btn-primary overlay-btn" style="pointer-events: auto; cursor: pointer; z-index: 1200; position: relative;">
+                                <i class="fas fa-download"></i>
+                                デバイス設定を読み込み
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>        <!-- フッター -->
+        <footer class="footer">
+        </footer>
+    </div>    <!-- JavaScript モジュール -->
+    <script src="js/console-manager.js"></script>
+    <script src="js/serial-connection.js"></script>
+    <script src="js/ulsa-config.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

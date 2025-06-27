@@ -1,0 +1,19 @@
+# OS generated files
+.DS_Store
+
+# Node.js
+node_modules/
+
+# IDE
+.vscode/
+.idea/
+
+# Debug/backup
+*.backup
+*.bak
+*.log
+*.tmp
+*.temp
+
+# VSCode
+*.code-workspace

@@ -1,0 +1,39 @@
+{
+  "name": "ulsa-configurator",
+  "version": "1.0.0",
+  "description": "Web-based configurator for ULSA series devices using Web Serial API",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve .",
+    "dev": "python -m http.server 8000",
+    "deploy": "gh-pages -d .",
+    "build": "echo 'No build step required for static site'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/ULSA_CONFIGURATOR.git"
+  },
+  "keywords": [
+    "ulsa",
+    "configurator",
+    "web-serial-api",
+    "iot",
+    "sensor",
+    "configuration",
+    "javascript",
+    "html5"
+  ],
+  "author": "STRVSN",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/your-username/ULSA_CONFIGURATOR/issues"
+  },
+  "homepage": "https://your-username.github.io/ULSA_CONFIGURATOR",
+  "devDependencies": {
+    "serve": "^14.0.0",
+    "gh-pages": "^6.0.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

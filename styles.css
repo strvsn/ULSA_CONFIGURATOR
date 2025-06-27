@@ -1,0 +1,836 @@
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    color: #333;
+    line-height: 1.6;
+    /* GPU加速を有効化 */
+    transform: translateZ(0);
+    will-change: scroll-position;
+    overflow-anchor: none; /* ← 追加: スクロールアンカー抑制 */
+}
+
+.app-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    max-width: 1400px; /* 幅を調整: 1600px → 1400px */
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* Header */
+.header {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    color: white;
+    padding: 1rem 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo-icon {
+    font-size: 2rem;
+    color: #3498db;
+}
+
+.header h1 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.connection-status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+}
+
+.status-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
+
+.status-indicator.connected {
+    background: #2ecc71;
+}
+
+.status-indicator.disconnected {
+    background: #e74c3c;
+}
+
+.status-text {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+/* Main content */
+.main-content {
+    flex: 1;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* 共通セクションスタイル */
+.section-base {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    margin-bottom: 0;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #f1f3f4;
+}
+
+.section-header h2 {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: #2c3e50;
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+/* Connection section */
+.connection-section {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.connection-controls {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.connection-settings {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.setting-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+}
+
+.setting-group label {
+    font-weight: 500;
+    color: #555;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.setting-group select {
+    min-width: 120px;
+    max-width: 150px;
+}
+
+/* Buttons */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    min-height: 44px;
+}
+
+.btn:disabled {
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+    background: #6c757d !important;
+    border-color: #6c757d !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+}
+
+.btn-primary:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+}
+
+.btn-danger {
+    background: #dc3545 !important;
+    color: white !important;
+    border-color: #dc3545 !important;
+    box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3) !important;
+    border: 2px solid #dc3545 !important;
+}
+
+.btn-danger:hover:not(:disabled) {
+    background: #c82333 !important;
+    border-color: #c82333 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(220, 53, 69, 0.4) !important;
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+}
+
+.btn-secondary:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
+}
+
+.btn-outline {
+    background: transparent;
+    color: #666;
+    border: 2px solid #ddd;
+}
+
+.btn-outline:hover:not(:disabled) {
+    background: #f8f9fa;
+    border-color: #bbb;
+}
+
+.btn-small {
+    padding: 0.5rem;
+    font-size: 0.8rem;
+    min-height: 36px;
+    width: 36px;
+    justify-content: center;
+}
+
+.btn-small.active {
+    background: #3498db;
+    color: white;
+}
+
+/* Form elements */
+.form-select {
+    padding: 0.75rem;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    background: white;
+    transition: border-color 0.3s ease;
+}
+
+.form-select:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+/* Console section */
+.console-section {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    flex-direction: column;
+}
+
+.console-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #f1f3f4;
+}
+
+.console-header h2 {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: #2c3e50;
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.console-controls {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.console-container {
+    background: #1e1e1e;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #333;
+    height: 16rem;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.console-output {
+    height: 100%;
+    max-height: 100%; /* ← 追加: 親の高さを超えない */
+    padding: 1rem;
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 0.8rem;  /* ← ここで統一 */
+    line-height: 1.4;
+    color: #f8f8f2;
+    background: #1e1e1e;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
+    contain: layout style paint;
+    will-change: scroll-position;
+    overflow-anchor: none; /* ← 追加: スクロールアンカー抑制 */
+}
+
+.console-output::-webkit-scrollbar {
+    width: 8px;
+}
+
+.console-output::-webkit-scrollbar-track {
+    background: #2d2d2d;
+}
+
+.console-output::-webkit-scrollbar-thumb {
+    background: #555;
+    border-radius: 4px;
+}
+
+.console-output::-webkit-scrollbar-thumb:hover {
+    background: #777;
+}
+
+/* Send section */
+.send-section {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 2px solid #f1f3f4;
+}
+
+.send-input-container {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.send-input {
+    flex: 1;
+    padding: 0.75rem;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 0.9rem;
+    transition: border-color 0.3s ease;
+}
+
+.send-input:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.send-btn {
+    min-width: 100px;
+}
+
+.send-options {
+    display: flex;
+    justify-content: center;
+    padding: 0.5rem 0;
+}
+
+.send-help {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.help-text {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: #666;
+    background: rgba(52, 152, 219, 0.1);
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    border: 1px solid rgba(52, 152, 219, 0.2);
+}
+
+.help-text i {
+    color: #3498db;
+}
+
+/* Console message types */
+.console-message {
+    margin-bottom: 0.1rem; /* 行間を詰める: 0.5rem → 0.1rem */
+    padding: 0.1rem 0; /* パディングも削減: 0.25rem → 0.1rem */
+    /* パフォーマンス最適化 */
+    contain: layout style paint;
+}
+
+.console-message.sent {
+    color: #50fa7b;
+}
+
+.console-message.received {
+    color: #8be9fd;
+}
+
+.console-message.error {
+    color: #ff5555;
+}
+
+.console-message.info {
+    color: #f1fa8c;
+}
+
+.console-message.success {
+    color: #50fa7b;
+    font-weight: bold;
+}
+
+.timestamp {
+    color: #6272a4;
+    font-size: 0.8rem;
+    margin-right: 0.5rem;
+}
+
+/* Footer */
+.footer {
+    background: #2c3e50;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    font-size: 0.9rem;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .app-container {
+        margin: 0;
+        border-radius: 0;
+    }
+    
+    .main-content {
+        padding: 1rem;
+    }
+    
+    .header {
+        padding: 1rem;
+    }
+    
+    .header-content {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+    
+    .connection-controls {
+        justify-content: center;
+    }
+    
+    .connection-settings {
+        grid-template-columns: 1fr;
+    }
+    
+    .send-input-container {
+        flex-direction: column;
+    }
+    
+    .send-btn {
+        align-self: stretch;
+    }
+}
+
+/* Loading animation */
+.loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ULSA設定セクション */
+.config-section {
+    position: relative;
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.config-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #f1f3f4;
+}
+
+.config-header h2 {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: #2c3e50;
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+/* 2カラムレイアウト */
+.config-groups-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 1rem;
+}
+
+.config-group {
+    margin-bottom: 0;
+}
+
+.config-group:last-child {
+    margin-bottom: 0;
+}
+
+.config-group-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 2px solid #ecf0f1;
+}
+
+.config-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+    padding: 0.6rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+}
+
+.config-item:hover {
+    background: #e9ecef;
+}
+
+.config-checkbox {
+    flex: 1;
+    margin: 0;
+}
+
+.config-label {
+    font-weight: 500;
+    color: #2c3e50;
+}
+
+.config-control {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 220px;
+}
+
+.config-control .form-select {
+    width: 220px;
+    min-width: 220px;
+}
+
+.form-input-number {
+    width: 80px;
+    padding: 0.5rem;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    text-align: center;
+    transition: border-color 0.2s ease;
+}
+
+.form-input-number:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.form-input-number:disabled {
+    background: #f8f9fa;
+    color: #6c757d;
+    cursor: not-allowed;
+}
+
+.config-unit {
+    font-size: 0.8rem;
+    color: #6c757d;
+    white-space: nowrap;
+}
+
+.config-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 2px solid #ecf0f1;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+    .main-content {
+        padding: 1rem;
+        gap: 1.5rem;
+    }
+    
+    .connection-section,
+    .console-section,
+    .config-section {
+        padding: 1.5rem;
+        border-radius: 12px;
+    }
+    
+    .section-header,
+    .console-header,
+    .config-header {
+        margin-bottom: 1rem;
+        padding-bottom: 0.75rem;
+    }
+    
+    .section-header h2,
+    .console-header h2,
+    .config-header h2 {
+        font-size: 1.1rem;
+    }
+    
+    .connection-controls {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+    
+    .connection-settings {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .console-container {
+        height: 16rem;
+    }
+    
+    /* 2カラムを1カラムに変更（モバイル） */
+    .config-groups-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .config-item {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+    }
+    
+    .config-control {
+        justify-content: space-between;
+        min-width: auto;
+    }
+    
+    .config-control .form-select {
+        width: 100%;
+        min-width: auto;
+        flex: 1;
+    }
+    
+    .config-actions {
+        flex-direction: column;
+    }
+    
+    .send-section {
+        gap: 1rem;
+    }
+    
+    .send-input-container {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+    
+    .send-btn {
+        align-self: stretch;
+    }
+}
+
+/* M5B設定無効化時の通知スタイル */
+.config-notice {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    padding: 0.75rem 1rem;
+    background: rgba(255, 193, 7, 0.1);
+    border: 1px solid rgba(255, 193, 7, 0.3);
+    border-radius: 6px;
+    color: #856404;
+    font-size: 0.9rem;
+}
+
+.config-notice i {
+    color: #ffc107;
+}
+
+/* M5B設定無効化時のスタイル */
+#m5bConfigGroup[style*="opacity: 0.5"] .config-group-title {
+    color: #999;
+}
+
+#m5bConfigGroup[style*="opacity: 0.5"] .config-label {
+    color: #999;
+}
+
+/* ULSA設定無効化時のスタイル */
+.config-section {
+    position: relative;
+}
+
+/* 新しいオーバーレイのスタイル */
+.config-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(0.5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    border-radius: 12px;
+    pointer-events: auto;
+}
+
+.overlay-content {
+    text-align: center;
+    padding: 1.5rem;
+    pointer-events: auto;
+    z-index: 1100;
+    position: relative;
+}
+
+.overlay-message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.overlay-message i {
+    font-size: 1.2rem;
+}
+
+.overlay-btn {
+    min-width: 160px;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    pointer-events: auto;
+    z-index: 1200;
+    position: relative;
+}
+
+.overlay-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(52, 152, 219, 0.4);
+}
+
+/* 設定セクションが無効化されている時の透明度 */
+.config-section.disabled {
+    opacity: 0.8;
+    pointer-events: none;
+    position: relative;
+}
+
+.config-section.disabled .config-overlay {
+    display: flex;
+    pointer-events: auto; /* オーバーレイ内の要素はクリック可能にする */
+    position: absolute;
+    z-index: 1000;
+}
+
+.config-section.disabled .config-overlay * {
+    pointer-events: auto; /* オーバーレイ内のすべての子要素をクリック可能にする */
+}
