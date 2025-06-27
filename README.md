@@ -1,5 +1,7 @@
 # ULSA Configurator
 
+[GitHub Pages 公開URL](https://strvsn.github.io/ULSA_CONFIGURATOR/)
+
 ULSAシリーズデバイスの設定を行うためのWebベースコンフィギュレータです。
 
 ## 特徴
