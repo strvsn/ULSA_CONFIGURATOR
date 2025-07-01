@@ -834,3 +834,291 @@ body {
 .config-section.disabled .config-overlay * {
     pointer-events: auto; /* オーバーレイ内のすべての子要素をクリック可能にする */
 }
+
+/* Multi-Device Management Styles */
+.multi-device-section {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    margin-bottom: 1.5rem;
+}
+
+.multi-device-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #f1f3f4;
+}
+
+.multi-device-header h2 {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: #2c3e50;
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.mode-indicator {
+    display: flex;
+    align-items: center;
+}
+
+.mode-badge {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    box-shadow: 0 2px 8px rgba(52, 152, 219, 0.3);
+}
+
+.device-list-section {
+    margin-bottom: 2rem;
+}
+
+.device-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.device-list-header h3 {
+    color: #2c3e50;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.device-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+    min-height: 120px;
+    border: 2px dashed #ddd;
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.device-grid:empty::after {
+    content: "接続されたデバイスがありません";
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    font-style: italic;
+    grid-column: 1 / -1;
+    height: 80px;
+}
+
+.device-item {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.device-item:hover {
+    background: #e9ecef;
+    border-color: #3498db;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.device-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.device-name {
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 0.95rem;
+}
+
+.device-status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.device-status .status-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
+
+.device-status.connected .status-indicator {
+    background: #2ecc71;
+}
+
+.device-status.disconnected .status-indicator {
+    background: #e74c3c;
+}
+
+.device-controls {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.batch-controls {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 1.5rem;
+    border: 1px solid #e9ecef;
+}
+
+.batch-actions {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #27ae60, #2ecc71);
+    color: white;
+    border: none;
+}
+
+.btn-success:hover:not(:disabled) {
+    background: linear-gradient(135deg, #229954, #27ae60);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(39, 174, 96, 0.3);
+}
+
+.batch-progress {
+    background: white;
+    border-radius: 8px;
+    padding: 1rem;
+    border: 1px solid #ddd;
+}
+
+.progress-header {
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #eee;
+}
+
+.progress-header h4 {
+    color: #2c3e50;
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.progress-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.progress-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem;
+    background: #f8f9fa;
+    border-radius: 6px;
+    border: 1px solid #e9ecef;
+}
+
+.progress-device-name {
+    flex: 1;
+    font-weight: 500;
+    color: #2c3e50;
+}
+
+.progress-bar {
+    flex: 2;
+    height: 6px;
+    background: #e9ecef;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #3498db, #2980b9);
+    border-radius: 3px;
+    transition: width 0.3s ease;
+}
+
+.progress-status {
+    font-size: 0.85rem;
+    color: #666;
+    min-width: 60px;
+    text-align: right;
+}
+
+.progress-status.sending {
+    color: #f39c12;
+}
+
+.progress-status.success {
+    color: #27ae60;
+}
+
+.progress-status.error {
+    color: #e74c3c;
+}
+
+/* Single Device Section (従来のUI) */
+.single-device-section {
+    /* 元の接続セクションのスタイルを継承 */
+}
+
+/* Responsive Design for Multi-Device */
+@media (max-width: 768px) {
+    .device-grid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+    
+    .batch-actions {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+    
+    .multi-device-header {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+    }
+    
+    .device-list-header {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: stretch;
+    }
+    
+    .progress-item {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: stretch;
+    }
+    
+    .progress-bar {
+        order: 2;
+    }
+    
+    .progress-status {
+        order: 3;
+        text-align: left;
+    }
+}

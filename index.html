@@ -75,6 +75,64 @@
                 </div>
             </section>
 
+            <!-- 複数デバイス管理セクション -->
+            <section id="multiDeviceSection" class="multi-device-section" style="display: none;">
+                <div class="multi-device-header">
+                    <h2>
+                        <i class="fas fa-network-wired"></i>
+                        複数デバイス管理
+                    </h2>
+                    <div class="mode-indicator">
+                        <span class="mode-badge">マルチデバイスモード</span>
+                    </div>
+                </div>
+                
+                <div class="multi-device-content">
+                    <!-- デバイスリスト -->
+                    <div class="device-list-section">
+                        <div class="device-list-header">
+                            <h3>接続済みデバイス</h3>
+                            <button id="addDeviceBtn" class="btn btn-primary">
+                                <i class="fas fa-plus"></i>
+                                デバイスを追加
+                            </button>
+                        </div>
+                        <div id="deviceList" class="device-grid">
+                            <!-- デバイスアイテムがここに動的に追加されます -->
+                        </div>
+                    </div>
+                    
+                    <!-- 一括操作コントロール -->
+                    <div class="batch-controls">
+                        <div class="batch-actions">
+                            <button id="batchConfigBtn" class="btn btn-success" disabled>
+                                <i class="fas fa-broadcast-tower"></i>
+                                一括設定送信
+                            </button>
+                            <button id="disconnectAllBtn" class="btn btn-outline">
+                                <i class="fas fa-unlink"></i>
+                                すべて切断
+                            </button>
+                        </div>
+                        
+                        <!-- 一括進捗表示 -->
+                        <div id="batchProgress" class="batch-progress" style="display: none;">
+                            <div class="progress-header">
+                                <h4>一括設定進捗</h4>
+                            </div>
+                            <div id="progressList" class="progress-list">
+                                <!-- 進捗アイテムがここに動的に追加されます -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- シングルデバイスセクション（従来のUI） -->
+            <section id="singleDeviceSection" class="single-device-section">
+                <!-- 元の接続セクションの内容はここに移動 -->
+            </section>
+
             <!-- コンソールセクション -->
             <section class="console-section">
                 <div class="console-header">
@@ -366,6 +424,7 @@
     <script src="js/console-manager.js"></script>
     <script src="js/serial-connection.js"></script>
     <script src="js/ulsa-config.js"></script>
+    <script src="js/multi-device-manager.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>
