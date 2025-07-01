@@ -27,6 +27,7 @@ class SerialConfigurator {
         
         // グローバルアクセス用（HTML内のonclickイベントで使用）
         window.multiDeviceManager = this.multiDeviceManager;
+        window.serialConfigurator = this;
 
         // モジュール間の連携設定
         this.setupModuleInteractions();
