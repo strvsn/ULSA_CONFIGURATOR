@@ -21,6 +21,10 @@ class SerialConfigurator {
 
         // ULSA設定管理モジュール
         this.ulsaConfig = new ULSAConfig(this.serialConnection, this.consoleManager);
+        
+        // 初期化完了ログ
+        this.consoleManager.logToConsole('info', 'SerialConfigurator初期化完了');
+        this.consoleManager.logToConsole('debug', 'ULSAConfig初期化完了');
 
         // 複数デバイス管理モジュール
         this.multiDeviceManager = new MultiDeviceManager(this.consoleManager);
@@ -28,6 +32,8 @@ class SerialConfigurator {
         // グローバルアクセス用（HTML内のonclickイベントで使用）
         window.multiDeviceManager = this.multiDeviceManager;
         window.serialConfigurator = this;
+        window.consoleManager = this.consoleManager;
+        window.ulsaConfig = this.ulsaConfig;
 
         // モジュール間の連携設定
         this.setupModuleInteractions();

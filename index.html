@@ -118,10 +118,6 @@
                         <!-- 一括操作コントロール -->
                         <div class="batch-controls">
                             <div class="batch-actions">
-                                <button id="batchConfigBtn" class="btn btn-success" disabled>
-                                    <i class="fas fa-broadcast-tower"></i>
-                                    一括設定送信
-                                </button>
                                 <button id="disconnectAllBtn" class="btn btn-outline" disabled>
                                     <i class="fas fa-unlink"></i>
                                     すべて切断
@@ -148,40 +144,70 @@
 
             <!-- コンソールセクション -->
             <section class="console-section">
-                <div class="console-header">
-                    <h2>
-                        <i class="fas fa-terminal"></i>
-                        コンソール
-                    </h2>
-                    <div class="console-controls">
-                        <button id="autoscrollBtn" class="btn btn-small active" title="自動スクロール">
-                            <i class="fas fa-arrows-alt-v"></i>
-                        </button>
-                        <button id="timestampBtn" class="btn btn-small active" title="タイムスタンプ表示">
-                            <i class="fas fa-clock"></i>
-                        </button>
+                <!-- シングルデバイス用コンソール -->
+                <div id="singleConsoleContainer">
+                    <div class="console-header">
+                        <h2>
+                            <i class="fas fa-terminal"></i>
+                            コンソール
+                        </h2>
+                        <div class="console-controls">
+                            <button id="autoscrollBtn" class="btn btn-small active" title="自動スクロール">
+                                <i class="fas fa-arrows-alt-v"></i>
+                            </button>
+                            <button id="timestampBtn" class="btn btn-small active" title="タイムスタンプ表示">
+                                <i class="fas fa-clock"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="console-container">
+                        <div id="console" class="console-output"></div>
+                    </div>
+                    
+                    <!-- 送信エリア -->
+                    <div class="send-section">
+                        <div class="send-input-container">
+                            <input type="text" id="sendInput" class="send-input" placeholder="送信するコマンドを入力..." disabled>
+                            <button id="sendBtn" class="btn btn-primary send-btn" disabled>
+                                <i class="fas fa-paper-plane"></i>
+                                送信
+                            </button>
+                        </div>
+                        <div class="send-options">
+                            <div class="send-help">
+                                <span class="help-text">
+                                    <i class="fas fa-info-circle"></i>
+                                    Enter: 改行なし送信 | Shift+Enter: CR付き送信
+                                </span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                
-                <div class="console-container">
-                    <div id="console" class="console-output"></div>
-                </div>
-                
-                <!-- 送信エリア -->
-                <div class="send-section">
-                    <div class="send-input-container">
-                        <input type="text" id="sendInput" class="send-input" placeholder="送信するコマンドを入力..." disabled>
-                        <button id="sendBtn" class="btn btn-primary send-btn" disabled>
-                            <i class="fas fa-paper-plane"></i>
-                            送信
-                        </button>
-                    </div>                    <div class="send-options">
-                        <div class="send-help">
-                            <span class="help-text">
-                                <i class="fas fa-info-circle"></i>
-                                Enter: 改行なし送信 | Shift+Enter: CR付き送信
-                            </span>
+
+                <!-- マルチデバイス用コンソール -->
+                <div id="multiConsoleContainer" style="display: none;">
+                    <div class="console-header">
+                        <h2>
+                            <i class="fas fa-terminal"></i>
+                            デバイス別コンソール
+                        </h2>
+                        <div class="console-controls">
+                            <button id="autoscrollBtnMulti" class="btn btn-small active" title="自動スクロール">
+                                <i class="fas fa-arrows-alt-v"></i>
+                            </button>
+                            <button id="timestampBtnMulti" class="btn btn-small active" title="タイムスタンプ表示">
+                                <i class="fas fa-clock"></i>
+                            </button>
+                            <button id="clearAllConsolesBtn" class="btn btn-small" title="全コンソールクリア">
+                                <i class="fas fa-trash"></i>
+                            </button>
                         </div>
+                    </div>
+                    
+                    <!-- デバイス別コンソールがここに動的に追加されます -->
+                    <div id="deviceConsoles" class="device-consoles-container">
+                        <!-- 各デバイスのコンソールが動的に追加される -->
                     </div>
                 </div>
             </section>
@@ -439,5 +465,70 @@
     <script src="js/ulsa-config.js"></script>
     <script src="js/multi-device-manager.js"></script>
     <script src="js/main.js"></script>
+    
+    <!-- デバッグ用テストスクリプト -->
+    <script>
+        // 初期化完了後にテスト
+        setTimeout(() => {
+            console.log('=== デバッグテスト開始 ===');
+            console.log('window.consoleManager:', window.consoleManager);
+            console.log('window.ulsaConfig:', window.ulsaConfig);
+            console.log('window.multiDeviceManager:', window.multiDeviceManager);
+            console.log('window.serialConfigurator:', window.serialConfigurator);
+            
+            if (window.consoleManager) {
+                console.log('consoleManager.logToConsole テスト実行');
+                window.consoleManager.logToConsole('info', 'デバッグテスト: consoleManagerは動作しています');
+            } else {
+                console.error('consoleManagerが見つかりません');
+            }
+            
+            if (window.ulsaConfig) {
+                console.log('ULSAConfig詳細:', {
+                    sendConfigBtn: window.ulsaConfig.sendConfigBtn,
+                    consoleManager: window.ulsaConfig.consoleManager,
+                    serialConnection: window.ulsaConfig.serialConnection
+                });
+                
+                // ULSAConfigのメソッドを直接呼び出してテスト
+                try {
+                    console.log('ULSAConfig.sendConfiguration直接呼び出しテスト');
+                    window.ulsaConfig.sendConfiguration();
+                } catch (error) {
+                    console.error('ULSAConfig.sendConfiguration呼び出しエラー:', error);
+                }
+                
+                // sendConfigurationメソッドの詳細確認
+                console.log('sendConfigurationメソッド:', typeof window.ulsaConfig.sendConfiguration);
+                console.log('sendConfigurationメソッド存在確認:', window.ulsaConfig.sendConfiguration.toString().substring(0, 200));
+                
+                const sendBtn = document.getElementById('sendConfigBtn');
+                console.log('sendConfigBtn:', sendBtn);
+                console.log('sendConfigBtn.disabled:', sendBtn ? sendBtn.disabled : 'ボタンが見つからない');
+                
+                // イベントリスナーの数を確認
+                if (sendBtn) {
+                    console.log('sendConfigBtnのイベントリスナー確認');
+                    
+                    // ボタンを強制的に有効化してテスト
+                    console.log('ボタンを強制的に有効化してテスト');
+                    sendBtn.disabled = false;
+                    sendBtn.style.opacity = '';
+                    sendBtn.style.cursor = '';
+                    console.log('ボタン有効化後:', sendBtn.disabled);
+                    
+                    // 手動でボタンクリックテスト（最後に追加）
+                    sendBtn.addEventListener('click', () => {
+                        console.log('手動テスト: ボタンがクリックされました');
+                        window.consoleManager.logToConsole('debug', '手動テスト: ボタンクリック検出');
+                    });
+                }
+            } else {
+                console.error('ulsaConfigが見つかりません');
+            }
+            
+            console.log('=== デバッグテスト完了 ===');
+        }, 1000);
+    </script>
 </body>
 </html>

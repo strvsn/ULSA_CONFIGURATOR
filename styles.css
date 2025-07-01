@@ -1194,3 +1194,182 @@ body {
         text-align: left;
     }
 }
+
+/* デバイス別コンソールスタイル */
+.device-consoles-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.device-console {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    overflow: hidden;
+}
+
+.device-console-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0;
+    padding: 1rem 1.5rem;
+    border-bottom: 2px solid #f1f3f4;
+    background: white;
+}
+
+.device-console-title {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: #2c3e50;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.device-status-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #27ae60;
+    animation: pulse 2s infinite;
+}
+
+.device-status-indicator.disconnected {
+    background: #e74c3c;
+    animation: none;
+}
+
+.device-console-controls {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.device-console-container {
+    background: #1e1e1e;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #333;
+    height: 300px;
+    width: 100%;
+    margin-bottom: 0;
+}
+
+.device-console-output {
+    height: 100%;
+    max-height: 100%;
+    padding: 1rem;
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 0.8rem;
+    line-height: 1.4;
+    color: #f8f8f2;
+    background: #1e1e1e;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
+    contain: layout style paint;
+    will-change: scroll-position;
+    overflow-anchor: none;
+}
+
+.device-console-output::-webkit-scrollbar {
+    width: 8px;
+}
+
+.device-console-output::-webkit-scrollbar-track {
+    background: #2d2d2d;
+}
+
+.device-console-output::-webkit-scrollbar-thumb {
+    background: #555;
+    border-radius: 4px;
+}
+
+.device-console-output::-webkit-scrollbar-thumb:hover {
+    background: #777;
+}
+
+.device-console-stats {
+    padding: 0.75rem 1.5rem;
+    background: white;
+    border-top: 1px solid #e9ecef;
+    font-size: 0.8rem;
+    color: #6c757d;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* デバイス別コンソールのメッセージスタイル - シングルコンソールと同じ色調 */
+.device-console .console-entry {
+    margin-bottom: 0.1rem;
+    padding: 0.1rem 0;
+    contain: layout style paint;
+}
+
+.device-console .console-entry.console-sent {
+    color: #50fa7b;
+}
+
+.device-console .console-entry.console-received {
+    color: #8be9fd;
+}
+
+.device-console .console-entry.console-error {
+    color: #ff5555;
+}
+
+.device-console .console-entry.console-warning {
+    color: #f1fa8c;
+}
+
+.device-console .console-entry.console-info {
+    color: #f1fa8c;
+}
+
+.device-console .console-entry.console-success {
+    color: #50fa7b;
+    font-weight: bold;
+}
+
+.device-console .console-entry.console-debug {
+    color: #6272a4;
+}
+
+.device-console .timestamp {
+    color: #6272a4;
+    font-size: 0.8rem;
+    margin-right: 0.5rem;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+    .device-console {
+        border-radius: 12px;
+    }
+    
+    .device-console-header {
+        padding: 1rem;
+    }
+    
+    .device-console-title {
+        font-size: 1rem;
+    }
+    
+    .device-console-container {
+        height: 200px;
+    }
+    
+    .device-console-output {
+        padding: 0.75rem;
+        font-size: 0.75rem;
+    }
+    
+    .device-console-stats {
+        padding: 0.5rem 1rem;
+        font-size: 0.75rem;
+    }
+}
